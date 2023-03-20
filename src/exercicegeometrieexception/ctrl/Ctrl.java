@@ -33,21 +33,38 @@ public class Ctrl implements ICtrlIhm {
 
     @Override
     public void selectCalcLargeur(String valueArea, String valueLongueur) {
+        refIhm.afficheMessage(" ");
         double valueAreaDouble = 0;
         double valueLongueurDouble = 0;
 
         try {
-            valueAreaDouble = Double.parseDouble(valueArea);
+
             valueLongueurDouble = Double.parseDouble(valueLongueur);
             refIhm.afficheResultatRectangle(String.valueOf(refWorker.calcLargeurFromRectangle(valueAreaDouble, valueLongueurDouble)));
-            if (valueAreaDouble < 0 || valueLongueurDouble < 0 ) {
+            if (valueLongueurDouble < 0) {
                 throw new IllegalArgumentException();
             }
         } catch (NumberFormatException e) {
-            refIhm.afficheMessage("Entrez une valeur et non du texte");
-        
-          } catch (IllegalArgumentException exception) {
-            refIhm.afficheMessage("Entrez une valeur positive");
+            refIhm.afficheMessage("Entrez une valeur et non du texte pour le champ de la longueur");
+
+        } catch (IllegalArgumentException exception) {
+            refIhm.afficheMessage("Entrez une valeur positive pour le champ de la longueur");
+
+        }
+
+        //other
+        try {
+            valueAreaDouble = Double.parseDouble(valueArea);
+
+            refIhm.afficheResultatRectangle(String.valueOf(refWorker.calcLargeurFromRectangle(valueAreaDouble, valueLongueurDouble)));
+            if (valueAreaDouble < 0) {
+                throw new IllegalArgumentException();
+            }
+        } catch (NumberFormatException e) {
+            refIhm.afficheMessage("Entrez une valeur et non du texte pour le champ de l'aire");
+
+        } catch (IllegalArgumentException exception) {
+            refIhm.afficheMessage("Entrez une valeur positive pour le champ de l'aire");
 
         }
 

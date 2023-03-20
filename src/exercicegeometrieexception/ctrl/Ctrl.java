@@ -11,25 +11,53 @@ public class Ctrl implements ICtrlIhm {
     public void demarrer() {
         refIhm.demarrer();
     }
-    
+
     @Override
-    public void selectCalcRadius( String value ) {
-        double valueDouble = Double.parseDouble( value );
-        refIhm.afficheResultatCircle( String.valueOf( refWorker.calcRadiusCircleFromArea( valueDouble ) ) );
+    public void selectCalcRadius(String value) {
+
+        double valueDouble = 0;
+        try {
+            valueDouble = Double.parseDouble(value);
+            refIhm.afficheResultatCircle(String.valueOf(refWorker.calcRadiusCircleFromArea(valueDouble)));
+            if (valueDouble < 0) {
+                throw new IllegalArgumentException();
+            }
+        } catch (NumberFormatException e) {
+            refIhm.afficheMessage("Entrez une valeur et non du texte");
+
+        } catch (IllegalArgumentException exception) {
+            refIhm.afficheMessage("Entrez une valeur positive");
+
+        }
     }
 
     @Override
-    public void selectCalcLargeur( String valueArea, String valueLongueur ) {
-        double valueAreaDouble = Double.parseDouble( valueArea );
-        double valueLongueurDouble = Double.parseDouble( valueLongueur );
-        refIhm.afficheResultatRectangle( String.valueOf( refWorker.calcLargeurFromRectangle( valueAreaDouble, valueLongueurDouble ) ) );
+    public void selectCalcLargeur(String valueArea, String valueLongueur) {
+        double valueAreaDouble = 0;
+        double valueLongueurDouble = 0;
+
+        try {
+            valueAreaDouble = Double.parseDouble(valueArea);
+            valueLongueurDouble = Double.parseDouble(valueLongueur);
+            refIhm.afficheResultatRectangle(String.valueOf(refWorker.calcLargeurFromRectangle(valueAreaDouble, valueLongueurDouble)));
+            if (valueAreaDouble < 0 || valueLongueurDouble < 0 ) {
+                throw new IllegalArgumentException();
+            }
+        } catch (NumberFormatException e) {
+            refIhm.afficheMessage("Entrez une valeur et non du texte");
+        
+          } catch (IllegalArgumentException exception) {
+            refIhm.afficheMessage("Entrez une valeur positive");
+
+        }
+
     }
 
-    public void setRefIhm( IIhmCtrl refIhm ) {
+    public void setRefIhm(IIhmCtrl refIhm) {
         this.refIhm = refIhm;
     }
 
-    public void setRefWorker( IWrkCtrl refWorker ) {
+    public void setRefWorker(IWrkCtrl refWorker) {
         this.refWorker = refWorker;
     }
 
